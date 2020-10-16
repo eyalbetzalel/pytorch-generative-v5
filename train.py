@@ -37,7 +37,7 @@ def main(args):
           datasets.CIFAR10('./data', train=False, download=True, transform=transform),	
           batch_size=args.batch_size)	
 
-  model = MODEL_MAP[args.model](in_channels=3, out_channels=1)	
+  model = MODEL_MAP[args.model](in_channels=3, out_channels=3)	
   optimizer = optim.Adam(model.parameters())	
   scheduler = lr_scheduler.MultiplicativeLR(optimizer, lambda _: 0.9984)	
 

@@ -50,7 +50,7 @@ def main(args):
   trainer = pg.trainer.Trainer(	
       model, loss_fn, optimizer, train_loader, test_loader, 	
       lr_scheduler=scheduler, log_dir=args.log_dir, save_checkpoint_epochs=1)
-  trainer.load_from_checkpoint()  
+  #trainer.load_from_checkpoint()  
   trainer.interleaved_train_and_eval(n_epochs=args.n_epochs)	
 
 

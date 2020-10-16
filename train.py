@@ -31,10 +31,10 @@ def main(args):
       transforms.Lambda(lambda x: distributions.Bernoulli(probs=x).sample())	
   ])	
   train_loader = torch.utils.data.DataLoader(	
-          datasets.MNIST('./data', train=True, download=True, transform=transform),	
+          datasets.CIFAR10('./data', train=True, download=True, transform=transform),	
           batch_size=args.batch_size, shuffle=True)	
   test_loader = torch.utils.data.DataLoader(	
-          datasets.MNIST('./data', train=False, download=True, transform=transform),	
+          datasets.CIFAR10('./data', train=False, download=True, transform=transform),	
           batch_size=args.batch_size)	
 
   model = MODEL_MAP[args.model](in_channels=1, out_channels=1)	

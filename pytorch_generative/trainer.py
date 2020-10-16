@@ -156,11 +156,14 @@ class Trainer:
       """Trains and evaluates (after each epoch) for n_epochs."""
 
       for _ in range(n_epochs):
+            
         start_time = time.time()
 
         # Train.
         print("Start Training")
         for i, batch in enumerate(self._train_loader):
+        import ipdb; ipdb.set_trace()
+        
           batch = batch if isinstance(batch, (tuple, list)) else (batch, None)
           x, y = batch
           self._examples_processed += x.shape[0]

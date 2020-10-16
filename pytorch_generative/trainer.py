@@ -218,8 +218,8 @@ class Trainer:
             print("sampling")
             curr_path = 'sample_' + str(self._epoch) + '.png'
             print(curr_path)
-            sampleTensor=self._model.sample((10, 1, 64, 64))
+            sampleTensor=self._model.sample((1, 1, 64, 64))
             sampleTensor=sampleTensor.cpu()
-            cu.imsave(sampleTensor, figsize=(50, 5),filename = curr_path)
+            cu.imsave(sampleTensor, figsize=(5, 5),filename = curr_path)
             
       self._summary_writer.close()

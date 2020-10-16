@@ -161,9 +161,10 @@ class Trainer:
         start_time = time.time()
 
         # Train.
-        print("Start Training")
-        trainer.load_from_checkpoint(self)
+        
+        
         if self._epoch == 0:
+            print("Start Training")
             for i, batch in enumerate(self._train_loader):
               print(i)
 

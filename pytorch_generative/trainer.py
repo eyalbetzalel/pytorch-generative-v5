@@ -162,7 +162,7 @@ class Trainer:
 
         # Train.
         print("Start Training")
-        load_from_checkpoint(self)
+        trainer.load_from_checkpoint(self)
         if self._epoch == 0:
             for i, batch in enumerate(self._train_loader):
               print(i)

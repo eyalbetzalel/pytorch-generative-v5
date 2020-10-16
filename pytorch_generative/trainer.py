@@ -219,7 +219,7 @@ class Trainer:
             print("sampling")
             curr_path = 'sample_from_epoch_' + str(self._epoch) + '.png'
             print(curr_path)
-            sampleTensor=self._model.sample((10, 3, 64, 64))
+            sampleTensor=self._model.sample((10, 3, 32, 32))
             sampleTensor=sampleTensor.cpu()
             cu.imsave(sampleTensor, figsize=(50, 5),filename = curr_path)
             

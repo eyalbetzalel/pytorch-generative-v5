@@ -4,7 +4,7 @@ import collections
 import os 
 import time
 import ipdb
-import colab_utils as cu
+import pytorch_generative.colab_utils as cu
 import torch
 from torch.utils import tensorboard
 

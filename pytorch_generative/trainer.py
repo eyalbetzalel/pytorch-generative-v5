@@ -156,70 +156,71 @@ class Trainer:
     def interleaved_train_and_eval(self, n_epochs):
       """Trains and evaluates (after each epoch) for n_epochs."""
 
-      for _ in range(n_epochs):
+      for j in range(n_epochs):
             
         start_time = time.time()
 
         # Train.
         
-        
-        if self._epoch == 0:
-            print("Start Training")
-            for i, batch in enumerate(self._train_loader):
-              print(i)
+        if self._epoch != 0:
+            j = self._epoch
+            
+        print("Start Training")
+        for i, batch in enumerate(self._train_loader):
+          print(i)
 
-              batch = batch if isinstance(batch, (tuple, list)) else (batch, None)
-              x, y = batch
-              self._examples_processed += x.shape[0]
-              lrs = {
-                  f'group_{i}': param['lr'] 
-                  for i, param in enumerate(self._optimizer.param_groups)
-              }
-              self._summary_writer.add_scalars('loss/lr', lrs, self._step)
-              loss = self._train_one_batch(x, y)
-              self._log_loss_dict(loss, training=True)
+          batch = batch if isinstance(batch, (tuple, list)) else (batch, None)
+          x, y = batch
+          self._examples_processed += x.shape[0]
+          lrs = {
+              f'group_{i}': param['lr'] 
+              for i, param in enumerate(self._optimizer.param_groups)
+          }
+          self._summary_writer.add_scalars('loss/lr', lrs, self._step)
+          loss = self._train_one_batch(x, y)
+          self._log_loss_dict(loss, training=True)
 
-              self._time_taken += time.time() - start_time
-              start_time = time.time()
-              self._summary_writer.add_scalar(
-                  'perf/examples_per_sec', 
-                  self._examples_processed / self._time_taken, 
-                  self._step)
-              self._summary_writer.add_scalar(
-                  'perf/millis_per_example', 
-                  self._time_taken / self._examples_processed * 1000, 
-                  self._step)
-              self._summary_writer.add_scalar('progress/epoch', self._epoch, self._step)
-              self._summary_writer.add_scalar('progress/step', self._step, self._step)
-              self._step += 1
+          self._time_taken += time.time() - start_time
+          start_time = time.time()
+          self._summary_writer.add_scalar(
+              'perf/examples_per_sec', 
+              self._examples_processed / self._time_taken, 
+              self._step)
+          self._summary_writer.add_scalar(
+              'perf/millis_per_example', 
+              self._time_taken / self._examples_processed * 1000, 
+              self._step)
+          self._summary_writer.add_scalar('progress/epoch', self._epoch, self._step)
+          self._summary_writer.add_scalar('progress/step', self._step, self._step)
+          self._step += 1
 
-            # Evaluate
-            print("Start Eval")
-            self._model.eval()
-            total_examples, total_loss = 0, collections.defaultdict(int)
-            for batch in self._eval_loader:
-              batch = batch if isinstance(batch, (tuple, list)) else (batch, None)
-              x, y = batch
-              n_examples = x.shape[0]
-              total_examples += n_examples
-              for key, loss in self._eval_one_batch(x, y).items():
-                total_loss[key] += loss * n_examples
-            loss = {key: loss / total_examples for key, loss in total_loss.items()}
-            self._log_loss_dict(loss, training=False)
-            ipdb.set_trace()
-            self._epoch += 1
-            print("Start Save Checkpoint")
-            self._save_checkpoint()
+        # Evaluate
+        print("Start Eval")
+        self._model.eval()
+        total_examples, total_loss = 0, collections.defaultdict(int)
+        for batch in self._eval_loader:
+          batch = batch if isinstance(batch, (tuple, list)) else (batch, None)
+          x, y = batch
+          n_examples = x.shape[0]
+          total_examples += n_examples
+          for key, loss in self._eval_one_batch(x, y).items():
+            total_loss[key] += loss * n_examples
+        loss = {key: loss / total_examples for key, loss in total_loss.items()}
+        self._log_loss_dict(loss, training=False)
+        ipdb.set_trace()
+        self._epoch += 1
+        print("Start Save Checkpoint")
+        self._save_checkpoint()
         
         ############### Sample ####################
         print("Sample")
         
-        if self._epoch % 1 == 0 :
+        if self._epoch % 10 == 0 :
             print("sampling")
-            curr_path = 'sample_' + str(self._epoch) + '.png'
+            curr_path = 'sample_from_epoch_' + str(self._epoch) + '.png'
             print(curr_path)
-            sampleTensor=self._model.sample((1, 1, 64, 64))
+            sampleTensor=self._model.sample((10, 3, 64, 64))
             sampleTensor=sampleTensor.cpu()
-            cu.imsave(sampleTensor, figsize=(5, 5),filename = curr_path)
+            cu.imsave(sampleTensor, figsize=(50, 5),filename = curr_path)
             
       self._summary_writer.close()

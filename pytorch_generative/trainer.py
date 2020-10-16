@@ -3,6 +3,7 @@
 import collections
 import os 
 import time
+import ipdb
 
 import torch
 from torch.utils import tensorboard
@@ -162,7 +163,7 @@ class Trainer:
         # Train.
         print("Start Training")
         for i, batch in enumerate(self._train_loader):
-        import ipdb; ipdb.set_trace()
+          ipdb.set_trace()
         
           batch = batch if isinstance(batch, (tuple, list)) else (batch, None)
           x, y = batch

@@ -159,6 +159,7 @@ class Trainer:
         start_time = time.time()
 
         # Train.
+        print("Start Training")
         for i, batch in enumerate(self._train_loader):
           batch = batch if isinstance(batch, (tuple, list)) else (batch, None)
           x, y = batch
@@ -186,6 +187,7 @@ class Trainer:
           self._step += 1
 
         # Evaluate
+        print("Start Eval")
         self._model.eval()
         total_examples, total_loss = 0, collections.defaultdict(int)
         for batch in self._eval_loader:
@@ -199,5 +201,18 @@ class Trainer:
         self._log_loss_dict(loss, training=False)
 
         self._epoch += 1
+        print("Start Save Checkpoint")
         self._save_checkpoint()
+        
+        ############### Sample ####################
+        print("Sample")
+        
+        if self._epoch % 1 == 0 :
+            print("sampling")
+            curr_path = 'sample_' + str(self._epoch) + '.png'
+            print(curr_path)
+            sampleTensor=self._model.sample((10, 3, 64, 64))
+            sampleTensor=sampleTensor.cpu()
+            cu.imsave(sampleTensor, figsize=(50, 5),filename = curr_path)
+            
       self._summary_writer.close()

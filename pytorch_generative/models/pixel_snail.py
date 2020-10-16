@@ -62,7 +62,7 @@ class PixelSNAILBlock(nn.Module):
   
   def __init__(self, 
                n_channels,
-               input_img_channels=3,
+               input_img_channels=1,
                n_residual_blocks=2,
                attention_key_channels=4,
                attention_value_channels=32):

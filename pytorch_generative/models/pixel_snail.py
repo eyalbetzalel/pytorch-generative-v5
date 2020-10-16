@@ -122,7 +122,7 @@ class PixelSNAIL(base.AutoregressiveModel):
   """
 
   def __init__(self, 
-               in_channels=3, 
+               in_channels=1, 
                out_channels=1,
                n_channels=64,
                n_pixel_snail_blocks=8,

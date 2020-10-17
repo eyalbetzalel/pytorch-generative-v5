@@ -167,7 +167,7 @@ class Trainer:
             
         print("Start Training")
         for i, batch in enumerate(self._train_loader):
-          print(i)
+          
 
           batch = batch if isinstance(batch, (tuple, list)) else (batch, None)
           x, y = batch
@@ -214,7 +214,8 @@ class Trainer:
         ############### Sample ####################
         print("Sample")
         
-        if self._epoch % 1 == 0 :
+        if self._epoch % 10 == 0 :
+            print("Epoch Number: " + str(self._epoch))
             print("sampling")
             curr_path = 'sample_from_epoch_' + str(self._epoch) + '.png'
             print(curr_path)

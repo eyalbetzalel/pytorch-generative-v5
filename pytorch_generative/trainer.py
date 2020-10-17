@@ -57,7 +57,7 @@ class Trainer:
         self._eval_loader = eval_loader
         self._log_dir = log_dir
         self._save_checkpoint_epochs = save_checkpoint_epochs
-        self._device = device or torch.device('cpu')
+        self._device = device or torch.device('cuda')
 
         self._step = 0
         self._epoch = 0

@@ -214,7 +214,7 @@ class Trainer:
         ############### Sample ####################
         print("Sample")
         
-        if self._epoch % 10 == 0 :
+        if self._epoch % 1 == 0 :
             print("sampling")
             curr_path = 'sample_from_epoch_' + str(self._epoch) + '.png'
             print(curr_path)

@@ -207,7 +207,6 @@ class Trainer:
             total_loss[key] += loss * n_examples
         loss = {key: loss / total_examples for key, loss in total_loss.items()}
         self._log_loss_dict(loss, training=False)
-        ipdb.set_trace()
         self._epoch += 1
         print("Start Save Checkpoint")
         self._save_checkpoint()
